@@ -15,7 +15,7 @@ int main() {
   std::cerr << std::unitbuf;
 
   std::unordered_map<std::string, std::function<void()>> commands = {
-    { "exit 0", exit_builtin() }
+    { "exit 0", exit_builtin },
   };
 
   while (true) {
