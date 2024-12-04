@@ -1,6 +1,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <functional>
+#include <vector>
+#include <algorithm>
 
 void handle_invalid_command(std::string command) {
   std::cout << command << ": command not found" << std::endl;
@@ -12,6 +14,17 @@ void exit_builtin() {
 
 void echo_builtin(std::string argument) {
   std::cout << argument << std::endl;
+}
+
+void type_builtin(std::string command) {
+  std::vector<std::string> builtin_commands = { "echo", "exit", "type" };
+  auto search_it = std::find(builtin_commands.begin(), builtin_commands.end(), command);
+
+  if (search_it != builtin_commands.end()) {
+    std::cout << command << " is a shell builtin" << std::endl;
+  } else {
+    std::cout << command << ": not found" << std::endl;
+  }
 }
 
 int main() {
@@ -29,6 +42,8 @@ int main() {
 
     if (command == "echo") {
       echo_builtin(arguments);
+    } else if (command == "type") {
+      type_builtin(arguments);
     } else if (command == "exit") {
       exit_builtin();
     } else {
