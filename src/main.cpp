@@ -20,52 +20,6 @@ bool is_executable(const std::filesystem::path &file_path) {
   return access(file_path.string().c_str(), X_OK) == 0;
 }
 
-std::vector<std::pair<std::string, std::string>> get_path_executables() {
-  // get all the path values
-  const char *path_env = std::getenv("PATH");
-  std::string path = path_env ? path_env : "";
-  std::vector<std::string> directories;
-  std::vector<std::pair<std::string, std::string>> executables;
-
-  if (path.empty()) {
-    std::cout << "Path variable not set." << std::endl;
-    return executables;
-  }
-
-  // split the path strings with :
-  std::stringstream ss(path);
-  std::string dir;
-  char delimiter = ':';
-
-#ifdef _WIN32
-  delimiter = ';';  // Use semicolon on Windows
-#endif
-
-  while (std::getline(ss, dir, delimiter)) {
-    directories.push_back(dir);
-  }
-
-  for (const auto &directory : directories) {
-    try {
-      for (const auto &entry : std::filesystem::directory_iterator(directory)) {
-        if (std::filesystem::is_regular_file(entry) &&
-            is_executable(entry.path())) {
-          std::string name = entry.path().filename().string();
-
-          std::string abs_path =
-              std::filesystem::absolute(entry.path()).string();
-
-          executables.push_back({name, abs_path});
-        }
-      }
-    } catch (const std::filesystem::filesystem_error &e) {
-      continue;
-    }
-  }
-
-  return executables;
-}
-
 void type_builtin(std::string command) {
   if (command.empty()) {
     std::cout << "type: missing argument" << std::endl;
@@ -94,12 +48,30 @@ void type_builtin(std::string command) {
     return;
   }
 
-  std::vector<std::pair<std::string, std::string>> execuatables =
-      get_path_executables();
-  for (const auto executable : execuatables) {
-    // if the command is an executable command
-    if (executable.first.find(command) != std::string::npos) {
-      print_executable(executable.second);
+  std::string path = std::getenv("PATH");
+  std::vector<std::string> directories;
+  std::stringstream ss(path);
+  std::string dir;
+  char delimiter = ':';
+
+#ifdef _WIN32
+  delimiter = ';';  // Use semicolon on Windows
+#endif
+
+  while (std::getline(ss, dir, delimiter)) {
+    directories.push_back(dir);
+  }
+
+  for (const auto &dir : directories) {
+    std::filesystem::path file_path = std::filesystem::path(dir) / command;
+
+    if (std::filesystem::exists(file_path) &&
+        std::filesystem::is_regular_file(file_path) &&
+        ((std::filesystem::status(file_path).permissions() &
+          std::filesystem::perms::owner_exec) !=
+         std::filesystem::perms::none)) {
+      // if the command is an executable command
+      print_executable(file_path.string());
       return;
     }
   }
