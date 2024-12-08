@@ -8,12 +8,6 @@
 #include <string>
 #include <vector>
 
-char delimiter = ':';
-
-#ifdef _WIN32
-char delimiter = ';';  // Use semicolon on Windows
-#endif
-
 void handle_invalid_command(std::string command) {
   std::cout << command << ": command not found" << std::endl;
 }
@@ -34,6 +28,12 @@ std::string get_executable_path(std::string command) {
   std::vector<std::string> directories;
   std::stringstream ss(path);
   std::string dir;
+
+  char delimiter = ':';
+
+#ifdef _WIN32
+  delimiter = ';';  // Use semicolon on Windows
+#endif
 
   while (std::getline(ss, dir, delimiter)) {
     directories.push_back(dir);
@@ -70,6 +70,7 @@ void type_builtin(std::string command) {
 
   if (executable_path != "") {
     std::cout << command << " is " << executable_path << std::endl;
+    return;
   }
 
   // if the command is not found
