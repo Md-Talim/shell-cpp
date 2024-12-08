@@ -105,7 +105,15 @@ int main() {
     } else if (command == "exit") {
       exit_builtin();
     } else {
-      handle_invalid_command(input);
+      std::string executable_path = get_executable_path(command);
+
+      if (executable_path != "") {
+        std::string full_command = executable_path + " " + arguments;
+        const char *command_ptr = full_command.c_str();
+        system(command_ptr);
+      } else {
+        handle_invalid_command(input);
+      }
     }
   }
 }
