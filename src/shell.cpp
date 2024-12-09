@@ -6,7 +6,6 @@
 #include "utils/command.h"
 
 void Shell::run() {
-    std::cout << "shell started\n";
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
 
@@ -23,6 +22,8 @@ void Shell::run() {
             type_builtin(command);
         } else if (command == "exit") {
             exit_builtin();
+        } else if (command == "pwd") {
+            pwd_builtin();
         } else {
             execute_external(command, arguments);
         }

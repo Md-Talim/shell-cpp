@@ -14,6 +14,7 @@ src/main.cpp
 src/shell.cpp
 src/builtins/echo.cpp
 src/builtins/exit.cpp
+src/builtins/pwd.cpp
 src/builtins/type.cpp
 src/utils/path.cpp
 src/utils/command.cpp
