@@ -19,7 +19,7 @@ void Shell::run() {
         if (command == "echo") {
             echo_builtin(arguments);
         } else if (command == "type") {
-            type_builtin(command);
+            type_builtin(arguments);
         } else if (command == "exit") {
             exit_builtin();
         } else if (command == "pwd") {
