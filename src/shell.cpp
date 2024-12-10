@@ -6,7 +6,6 @@
 #include "utils/command.h"
 
 void Shell::run() {
-    std::cout << "shell started\n";
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
 
@@ -20,9 +19,11 @@ void Shell::run() {
         if (command == "echo") {
             echo_builtin(arguments);
         } else if (command == "type") {
-            type_builtin(command);
+            type_builtin(arguments);
         } else if (command == "exit") {
             exit_builtin();
+        } else if (command == "pwd") {
+            pwd_builtin();
         } else {
             execute_external(command, arguments);
         }
