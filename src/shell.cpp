@@ -3,11 +3,14 @@
 #include <iostream>
 
 #include "builtins/builtins.h"
+#include "builtins/navigation/navigation.h"
 #include "utils/command.h"
 
 void Shell::run() {
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
+
+    Navigation navigation;
 
     while (true) {
         std::cout << "$ ";
@@ -23,7 +26,7 @@ void Shell::run() {
         } else if (command == "exit") {
             exit_builtin();
         } else if (command == "pwd") {
-            pwd_builtin();
+            navigation.pwd();
         } else {
             execute_external(command, arguments);
         }
