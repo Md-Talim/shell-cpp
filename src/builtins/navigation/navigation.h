@@ -11,6 +11,7 @@ class Navigation {
    public:
     Navigation();
     void pwd();
+    void cd(std::string path);
 };
 
 #endif

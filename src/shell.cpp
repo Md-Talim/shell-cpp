@@ -27,6 +27,8 @@ void Shell::run() {
             exit_builtin();
         } else if (command == "pwd") {
             navigation.pwd();
+        } else if (command == "cd") {
+            navigation.cd(arguments);
         } else {
             execute_external(command, arguments);
         }
