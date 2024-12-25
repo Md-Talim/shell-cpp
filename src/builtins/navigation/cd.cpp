@@ -16,6 +16,8 @@ void Navigation::cd(std::string path) {
         new_path = std::filesystem::current_path() / new_path;
     }
 
+    new_path = std::filesystem::canonical(new_path);
+
     if (!is_exists(new_path.string())) {
         std::cout << "cd: " << path << ": No such file or directory"
                   << std::endl;
