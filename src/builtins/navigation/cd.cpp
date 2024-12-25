@@ -13,7 +13,7 @@ void Navigation::cd(std::string path) {
 
     // Handle relative paths
     if (new_path.is_relative()) {
-        new_path = current_directory / new_path;
+        new_path = std::filesystem::current_path() / new_path;
     }
 
     if (!is_exists(new_path.string())) {
