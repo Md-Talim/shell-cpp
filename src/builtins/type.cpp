@@ -11,7 +11,7 @@ void type_builtin(const std::string& command) {
         return;
     }
 
-    std::vector<std::string> builtin_commands = {"echo", "exit", "type", "pwd"};
+    std::vector<std::string> builtin_commands = {"echo", "exit", "type", "pwd", "cd"};
     auto search_it =
         std::find(builtin_commands.begin(), builtin_commands.end(), command);
 
