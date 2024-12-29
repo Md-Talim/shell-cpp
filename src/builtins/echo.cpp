@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stack>
 
 #include "builtins.h"
 
@@ -21,13 +20,22 @@ std::string remove_extra_spaces(const std::string& str) {
 }
 
 std::string parse_double_quotes(const std::string& str) {
-    std::stack<char> st;
     std::string result;
+    bool inside_quotes = false;
 
     for (char c : str) {
-        if (c != '"') {
+        if (c == '"') {
+            inside_quotes = !inside_quotes;
+            if (!inside_quotes && !result.empty()) {
+                result += " ";
+            }
+        } else if (inside_quotes) {
             result += c;
         }
+    }
+
+    if (!result.empty() && result.back() == ' ') {
+        result.pop_back();
     }
 
     return result;
