@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 #include "builtins.h"
 
@@ -19,9 +20,24 @@ std::string remove_extra_spaces(const std::string& str) {
     return result;
 }
 
+std::string parse_double_quotes(const std::string& str) {
+    std::stack<char> st;
+    std::string result;
+
+    for (char c : str) {
+        if (c != '"') {
+            result += c;
+        }
+    }
+
+    return result;
+}
+
 void echo_builtin(const std::string& argument) {
     if (argument[0] == '\'') {
         std::cout << argument.substr(1, argument.size() - 2) << std::endl;
+    } else if (argument[0] == '"') {
+        std::cout << parse_double_quotes(argument) << std::endl;
     } else {
         std::cout << remove_extra_spaces(argument) << std::endl;
     }
