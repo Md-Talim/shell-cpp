@@ -16,8 +16,8 @@ std::tuple<std::string, std::string> parse_command(std::string& input) {
 }
 
 void execute_external(std::string& command, std::string& arguments) {
-    std::string executable_path = get_executable_path(command);
-    if (!executable_path.empty()) {
+    bool is_executable = is_command_executable(command);
+    if (is_executable) {
         std::string full_command = command + " " + arguments;
         system(full_command.c_str());
     } else {
