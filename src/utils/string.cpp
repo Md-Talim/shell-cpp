@@ -19,6 +19,32 @@ std::string remove_extra_spaces(const std::string& str) {
     return result;
 }
 
+std::string parse_single_quotes(const std::string& str) {
+    std::string result;
+    bool inside_quotes = false;
+
+    int len = str.size();
+
+    for (int i = 0; i < len; i++) {
+        if (str[i] == '\'') {
+            inside_quotes = !inside_quotes;
+        } else if (inside_quotes) {
+            result += str[i];
+        } else {
+            while (str[i] == ' ' && i + 1 < len && str[i + 1] == ' ') {
+                i++;
+            }
+            result += str[i];
+        }
+    }
+
+    if (!result.empty() && result.back() == ' ') {
+        result.pop_back();
+    }
+
+    return result;
+}
+
 std::string parse_double_quotes(const std::string& str) {
     std::string result;
     bool inside_quotes = false;
