@@ -41,12 +41,31 @@ std::string parse_double_quotes(const std::string& str) {
     return result;
 }
 
+std::string parse_backslashes(const std::string& str) {
+    std::string result;
+    bool escape = false;
+
+    for (char c : str) {
+        if (escape) {
+            result += c;
+            escape = false;
+        } else if (c == '\\') {
+            escape = true;
+        } else {
+            result += c;
+        }
+    }
+
+    return result;
+}
+
 void echo_builtin(const std::string& argument) {
     if (argument[0] == '\'') {
         std::cout << argument.substr(1, argument.size() - 2) << std::endl;
     } else if (argument[0] == '"') {
         std::cout << parse_double_quotes(argument) << std::endl;
     } else {
-        std::cout << remove_extra_spaces(argument) << std::endl;
+        std::cout << parse_backslashes(remove_extra_spaces(argument))
+                  << std::endl;
     }
 }
