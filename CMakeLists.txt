@@ -20,4 +20,5 @@ src/builtins/navigation/navigation.cpp
 src/builtins/navigation/pwd.cpp
 src/utils/path.cpp
 src/utils/command.cpp
+src/utils/string.cpp
 )
