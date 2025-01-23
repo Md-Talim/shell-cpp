@@ -23,14 +23,18 @@ std::string parse_double_quotes(const std::string& str) {
     std::string result;
     bool inside_quotes = false;
 
-    for (char c : str) {
-        if (c == '"') {
+    int len = str.size();
+
+    for (int i = 0; i < len; i++) {
+        if (str[i] == '"') {
             inside_quotes = !inside_quotes;
-            if (!inside_quotes && !result.empty()) {
-                result += " ";
-            }
         } else if (inside_quotes) {
-            result += c;
+            result += str[i];
+        } else {
+            while (str[i] == ' ' && i + 1 < len && str[i + 1] == ' ') {
+                i++;
+            }
+            result += str[i];
         }
     }
 
