@@ -20,7 +20,7 @@ std::string get_executable_path(const std::string &command) {
     if (command.front() == '\'' or command.front() == '"') {
         front_char = command.front();
         rear_char = command.back();
-        parsed_command = command.substr(1, command.size() - 1);
+        parsed_command = command.substr(1, command.size() - 2);
     } else {
         parsed_command = command;
         front_char = "";
