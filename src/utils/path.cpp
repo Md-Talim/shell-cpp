@@ -14,7 +14,7 @@ bool is_executable(const std::string &path) {
             std::filesystem::perms::none);
 }
 
-bool is_command_executable(const std::string &command) {
+std::string get_executable_path(const std::string &command) {
     std::string path = std::getenv("PATH");
     std::stringstream ss(path);
     std::string dir;
@@ -28,9 +28,9 @@ bool is_command_executable(const std::string &command) {
     while (std::getline(ss, dir, delimiter)) {
         auto file_path = std::filesystem::path(dir) / command;
         if (is_executable(file_path.string())) {
-            return true;
+            return file_path.string();
         }
     }
 
-    return false;
+    return "";
 }

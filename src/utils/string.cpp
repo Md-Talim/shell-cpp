@@ -2,6 +2,13 @@
 
 #include <string>
 
+#define END '\0'
+#define SPACE ' '
+#define SINGLE '\''
+#define DOUBLE '"'
+#define BACKSLASH '\\'
+#define GREATER_THAN '>'
+
 std::string remove_extra_spaces(const std::string& str) {
     std::string result;
     bool space = false;
@@ -17,6 +24,11 @@ std::string remove_extra_spaces(const std::string& str) {
         }
     }
     return result;
+}
+
+char map_backslash_character(char character) {
+    if (character == BACKSLASH || character == DOUBLE) return character;
+    return END;
 }
 
 std::string parse_single_quotes(const std::string& str) {
@@ -55,7 +67,24 @@ std::string parse_double_quotes(const std::string& str) {
         if (str[i] == '"') {
             inside_quotes = !inside_quotes;
         } else if (inside_quotes) {
-            result += str[i];
+            if (str[i] == BACKSLASH) {
+                char character = str[i + 1];
+                if (character == END) {
+                    i++;
+                    continue;
+                }
+
+                char mapped = map_backslash_character(character);
+
+                if (mapped != END)
+                    character = mapped;
+                else
+                    result += BACKSLASH;
+
+                result += character;
+                i++;
+            } else
+                result += str[i];
         } else {
             while (str[i] == ' ' && i + 1 < len && str[i + 1] == ' ') {
                 i++;

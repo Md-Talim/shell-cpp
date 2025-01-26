@@ -4,6 +4,6 @@
 #include <string>
 
 bool is_executable(const std::string& path);
-bool is_command_executable(const std::string& command);
+std::string get_executable_path(const std::string& command);
 
 #endif
