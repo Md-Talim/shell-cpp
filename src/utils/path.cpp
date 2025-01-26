@@ -15,6 +15,18 @@ bool is_executable(const std::string &path) {
 }
 
 std::string get_executable_path(const std::string &command) {
+    std::string parsed_command;
+    std::string front_char, rear_char;
+    if (command.front() == '\'' or command.front() == '"') {
+        front_char = command.front();
+        rear_char = command.back();
+        parsed_command = command.substr(1, command.size() - 1);
+    } else {
+        parsed_command = command;
+        front_char = "";
+        rear_char = "";
+    }
+
     std::string path = std::getenv("PATH");
     std::stringstream ss(path);
     std::string dir;
@@ -26,9 +38,9 @@ std::string get_executable_path(const std::string &command) {
 #endif
 
     while (std::getline(ss, dir, delimiter)) {
-        auto file_path = std::filesystem::path(dir) / command;
-        if (is_executable(file_path.string())) {
-            return file_path.string();
+        std::string full_path = dir + "/" + parsed_command;
+        if (is_executable(full_path)) {
+            return dir + "/" + front_char + parsed_command + rear_char;
         }
     }
 
