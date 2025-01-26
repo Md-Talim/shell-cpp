@@ -85,6 +85,15 @@ std::string parse_double_quotes(const std::string& str) {
                 i++;
             } else
                 result += str[i];
+        } else if (str[i] == BACKSLASH) {
+            char character = str[i + 1];
+            if (character == END) {
+                i++;
+                continue;
+            }
+
+            result += character;
+            i++;
         } else {
             while (str[i] == ' ' && i + 1 < len && str[i + 1] == ' ') {
                 i++;
