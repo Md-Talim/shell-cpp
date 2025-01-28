@@ -10,15 +10,8 @@ include_directories(include)
 include_directories(src/utils)
 
 add_executable(shell
+src/command.cpp
 src/main.cpp
-src/shell.cpp
-src/builtins/echo.cpp
-src/builtins/exit.cpp
-src/builtins/type.cpp
-src/builtins/navigation/cd.cpp
-src/builtins/navigation/navigation.cpp
-src/builtins/navigation/pwd.cpp
-src/utils/path.cpp
-src/utils/command.cpp
-src/utils/string.cpp
+src/parser.cpp
+src/utils.cpp
 )
