@@ -1,34 +1,69 @@
+# My Own Shell in C++
+
 [![progress-banner](https://backend.codecrafters.io/progress/shell/2487ac07-6422-4974-b2aa-f78a1039e2f8)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
 
-This is a starting point for C++ solutions to the
-["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
+This repository contains the code for a POSIX-compliant shell written in C++. This project is part of the ["Build Your Own Shell"](https://app.codecrafters.io/courses/shell/overview) Challenge on CodeCrafters.
 
-In this challenge, you'll build your own POSIX compliant shell that's capable of
-interpreting shell commands, running external programs and builtin commands like
-cd, pwd, echo and more. Along the way, you'll learn about shell command parsing,
-REPLs, builtin commands, and more.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+## Overview
 
-# Passing the first stage
+This shell can interpret shell commands, run external programs, and handle built-in commands like `cd`, `pwd`, `echo`, and more. It includes features such as command parsing, REPL (Read-Eval-Print Loop), and built-in commands. Future updates will include support for output redirection and autocompletion.
 
-The entry point for your `shell` implementation is in `src/main.cpp`. Study and
-uncomment the relevant code, and push your changes to pass the first stage:
+## Project Structure
+
+
+- **`.codecrafters/`**: Contains scripts for compiling and running your program on CodeCrafters.
+- **`.vscode/`**: Contains Visual Studio Code settings.
+- **`build/`**: Directory where the build files are generated.
+- **`include/`**: Contains header files.
+- **`src/`**: Contains the source code for the shell and its utilities.
+- **`CMakeLists.txt`**: CMake configuration file.
+- **`codecrafters.yml`**: Configuration file for CodeCrafters.
+- **`your_program.sh`**: Script to run your program locally.
+
+## Getting Started
+
+### Prerequisites
+
+- Ensure you have `cmake` installed locally.
+- Ensure you have `vcpkg` installed and configured.
+
+### Building the Project
+
+To build the project, run the following command:
 
 ```sh
-git commit -am "pass 1st stage" # any msg
-git push origin master
+./your_program.sh
 ```
 
-Time to move on to the next stage!
+This script will compile the project using CMake and build the executable.
 
-# Stage 2 & beyond
+### Running the Shell
 
-Note: This section is for stages 2 and beyond.
+To run the shell, execute the following command:
 
-1. Ensure you have `cmake` installed locally
-1. Run `./your_program.sh` to run your program, which is implemented in
-   `src/main.cpp`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
+```sh
+./build/shell
+```
+
+This will start the shell, and you can begin entering commands.
+
+## Built-in Commands
+
+The shell supports the following built-in commands:
+
+| Command          | Description                                |
+|------------------|--------------------------------------------|
+| `cd <directory>` | Change the current directory.              |
+| `pwd`            | Print the current working directory.       |
+| `echo <text>`    | Print the text to the standard output.     |
+| `type <command>` | Display information about the command.     |
+| `exit`           | Exit the shell.                            |
+
+## External Commands
+
+The shell can also execute external commands found in the system's `PATH`.
+
+## Acknowledgements
+
+This project is part of the CodeCrafters "Build Your Own Shell" Challenge. Special thanks to the CodeCrafters team for providing the challenge and resources.
